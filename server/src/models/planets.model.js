@@ -1,4 +1,3 @@
-const { rejects } = require('assert');
 const { parse } = require('csv-parse');
 const fs = require('fs');
 const path = require('path');
@@ -25,10 +24,9 @@ const loadPlanetsData = () =>
         if (isHabitablePlanet(data)) habitablePlanets.push(data);
       })
       .on('error', (err) => reject(err))
-      .on('end', () => {
-        console.log(`${habitablePlanets.length} habitable planets found!`);
-        resolve();
-      })
+      .on('end', () => resolve())
   );
 
-module.exports = { planets: habitablePlanets, loadPlanetsData };
+const getAllPlanets = () => habitablePlanets;
+
+module.exports = { getAllPlanets, loadPlanetsData };
