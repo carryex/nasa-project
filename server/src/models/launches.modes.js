@@ -37,21 +37,17 @@ const scheduleNewLaunch = async (launch) => {
 };
 
 const saveLaunch = async (launch) => {
-  try {
-    const planet = await planets.findOne({ keplerName: launch.target });
-    if (!planet) {
-      throw new Error('No matching planet found');
-    }
-    await launches.findOneAndUpdate(
-      {
-        flightNumber: launch.flightNumber,
-      },
-      launch,
-      { upsert: true }
-    );
-  } catch (err) {
-    console.error(err);
+  const planet = await planets.findOne({ keplerName: launch.target });
+  if (!planet) {
+    throw new Error('No matching planet found');
   }
+  await launches.findOneAndUpdate(
+    {
+      flightNumber: launch.flightNumber,
+    },
+    launch,
+    { upsert: true }
+  );
 };
 
 const abortLaunchById = async (flightNumber) => {
